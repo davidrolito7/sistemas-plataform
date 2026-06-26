@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg fill="none" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs />
+
+  <g opacity="1" id="Shape Layer 1">
+    <animate
+      repeatCount="1"
+      attributeName="opacity"
+      dur="0.7166666666666667s"
+      begin="1.2666666666666666s"
+      calcMode="spline"
+      values="1; 0"
+      keyTimes="0; 1"
+      keySplines="0.912 0.073 0.626 0.729"
+      fill="freeze"
+    />
+    <g transform="translate(256,257.86)">
+      <g transform="scale(0,0)">
+        <animateTransform
+          repeatCount="1"
+          type="scale"
+          attributeName="transform"
+          dur="1.883s"
+          begin="0.167s"
+          calcMode="spline"
+          values="0 0; 1.5 1.5; 1.5 1.5; 2.1 2.1"
+          keyTimes="0; 0.354; 0.584; 1"
+          keySplines="0.477 0.587 0 0.999; 0 0 1 1; 0.167 0 0.833 1"
+          fill="freeze"
+        />
+        <g transform="translate(0,0)">
+          <g id="Ellipse 1" transform="matrix(1,0,0,1,0,-3)">
+            <ellipse
+              ry="118"
+              rx="118"
+              cy="0"
+              cx="0"
+              stroke-linejoin="miter"
+              stroke-linecap="butt"
+              stroke-width="2"
+              stroke-opacity="1"
+              stroke="#ffffff"
+              fill="#c8f1e0"
+              fill-opacity="1"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <g id="Shape Layer 2">
+    <g transform="translate(256,257.86)">
+      <g transform="scale(0,0)">
+        <animateTransform
+          repeatCount="1"
+          type="scale"
+          attributeName="transform"
+          dur="0.667s"
+          begin="0.333s"
+          calcMode="spline"
+          values="0 0; 1.5 1.5"
+          keyTimes="0; 1"
+          keySplines="0.656 0.872 0 0.98"
+          fill="freeze"
+        />
+        <g transform="translate(0,0)">
+          <g id="Ellipse 1" transform="matrix(1,0,0,1,0,-3)">
+            <ellipse
+              ry="118"
+              rx="118"
+              cy="0"
+              cx="0"
+              fill="#2cda94"
+              fill-opacity="1"
+            />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <g transform="matrix(1,0,0,1,256,256)" id="check">
+    <g id="Shape 1">
+      <path
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="30"
+        stroke-opacity="1"
+        stroke="#ffffff"
+        d="M-82.5,4.5L-31,55L73,-52.5"
+      />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,330 @@
+<app-header></app-header>
+<p-toast position="top-right" />
+<app-spinner [isLoading]="isLoading()" [message]="spinnerMessage()"></app-spinner>
+
+<div class="deploy-shell grid grid-cols-1 xl:grid-cols-[320px_minmax(0,1fr)] min-h-[calc(100dvh-64px)] pt-4 gap-3 sm:gap-4 items-stretch">
+
+    <aside class="liquid-glass relative rounded-2xl overflow-hidden flex flex-col order-2 xl:order-1"
+        [class.justify-center]="!selectedType">
+        <div class="relative z-10 p-5 sm:p-8 lg:p-10 flex-1 min-h-0 overflow-y-auto">
+
+            <div class="w-14 h-14 rounded-2xl bg-white/25 border border-white/35 flex items-center justify-center mb-6 shadow-sm">
+                <i class="pi text-2xl text-surface-100"
+                   [class.pi-cloud-upload]="!selectedType"
+                   [class.pi-code]="selectedType === 'angular'"
+                   [class.pi-server]="selectedType === 'dotnet'"></i>
+            </div>
+
+            @if (selectedType === 'angular') {
+            <h2 class="text-2xl sm:text-3xl font-bold leading-tight tracking-[-0.03em] text-surface-0 m-0 mb-1">
+                Guia Angular
+            </h2>
+            <p class="text-sm leading-relaxed text-surface-300 m-0 mb-5">
+                Sigue estos pasos antes de generar el ZIP.
+            </p>
+            <ol class="list-none p-0 m-0 flex flex-col gap-3">
+                <li class="rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                    <div class="flex items-center gap-2 mb-2.5">
+                        <span class="text-[0.62rem] font-bold bg-indigo-500/25 text-indigo-200 rounded-md px-1.5 py-0.5 shrink-0">PASO 1</span>
+                        <strong class="text-[0.8rem] text-surface-100">Agrega web.config en src/</strong>
+                    </div>
+                    <p class="text-[0.72rem] text-surface-300 m-0 mb-2.5 leading-relaxed">
+                        Descarga el archivo y cambia la URL por el nombre de tu proyecto:
+                    </p>
+                    <code class="block text-[0.66rem] bg-black/25 rounded-lg px-3 py-2 text-indigo-200 leading-relaxed mb-3 break-all">
+                        &lt;action type="Rewrite" url="/<em class="not-italic text-indigo-300 font-semibold">tu-proyecto</em>/" /&gt;
+                    </code>
+                    <button (click)="downloadWebConfig()"
+                        class="flex items-center gap-2 text-[0.72rem] font-semibold text-indigo-300 hover:text-indigo-100 bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-400/30 rounded-lg px-3 py-1.5 transition-colors cursor-pointer">
+                        <i class="pi pi-download text-xs"></i>
+                        Descargar web.config
+                    </button>
+                </li>
+                <li class="rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                    <div class="flex items-center gap-2 mb-2.5">
+                        <span class="text-[0.62rem] font-bold bg-indigo-500/25 text-indigo-200 rounded-md px-1.5 py-0.5 shrink-0">PASO 2</span>
+                        <strong class="text-[0.8rem] text-surface-100">angular.json → assets</strong>
+                    </div>
+                    <p class="text-[0.72rem] text-surface-300 m-0 mb-2.5 leading-relaxed">
+                        Dentro del array <code class="bg-white/10 rounded px-1">assets</code> de tu build, agrega:
+                    </p>
+                    <pre class="text-[0.64rem] bg-black/25 rounded-lg px-3 py-2.5 text-emerald-300 leading-relaxed m-0 overflow-x-auto"><code>&#123;
+  "glob": "web.config",
+  "input": "src",
+  "output": "/"
+&#125;</code></pre>
+                </li>
+                <li class="rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                    <div class="flex items-center gap-2 mb-2.5">
+                        <span class="text-[0.62rem] font-bold bg-indigo-500/25 text-indigo-200 rounded-md px-1.5 py-0.5 shrink-0">PASO 3</span>
+                        <strong class="text-[0.8rem] text-surface-100">Build y ZIP</strong>
+                    </div>
+                    <p class="text-[0.72rem] text-surface-300 m-0 mb-2 leading-relaxed">
+                        Ejecuta el build:
+                    </p>
+                    <code class="block text-[0.66rem] bg-black/25 rounded-lg px-3 py-2 text-amber-200 leading-relaxed mb-2.5">ng build</code>
+                    <p class="text-[0.72rem] text-surface-300 m-0 leading-relaxed">
+                        Comprime los <strong class="text-surface-200">archivos dentro</strong> de <code class="bg-white/10 rounded px-1">browser/</code>, no la carpeta en si.
+                    </p>
+                </li>
+            </ol>
+            } @else if (selectedType === 'dotnet') {
+            <h2 class="text-2xl sm:text-3xl font-bold leading-tight tracking-[-0.03em] text-surface-0 m-0 mb-1">
+                Guia .NET
+            </h2>
+            <p class="text-sm leading-relaxed text-surface-300 m-0 mb-5">
+                Sigue estos pasos antes de generar el ZIP.
+            </p>
+            <ol class="list-none p-0 m-0 flex flex-col gap-3">
+                <li class="rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                    <div class="flex items-center gap-2 mb-2.5">
+                        <span class="text-[0.62rem] font-bold bg-violet-500/25 text-violet-200 rounded-md px-1.5 py-0.5 shrink-0">PASO 1</span>
+                        <strong class="text-[0.8rem] text-surface-100">Publicar el proyecto</strong>
+                    </div>
+                    <p class="text-[0.72rem] text-surface-300 m-0 mb-2.5 leading-relaxed">
+                        Desde Visual Studio usa <strong class="text-surface-200">Publish</strong>, o con la CLI:
+                    </p>
+                    <code class="block text-[0.66rem] bg-black/25 rounded-lg px-3 py-2 text-violet-200 leading-relaxed">
+                        dotnet publish -c Release
+                    </code>
+                </li>
+                <li class="rounded-xl bg-white/[0.06] border border-white/10 p-4">
+                    <div class="flex items-center gap-2 mb-2.5">
+                        <span class="text-[0.62rem] font-bold bg-violet-500/25 text-violet-200 rounded-md px-1.5 py-0.5 shrink-0">PASO 2</span>
+                        <strong class="text-[0.8rem] text-surface-100">Comprimir el compilado</strong>
+                    </div>
+                    <p class="text-[0.72rem] text-surface-300 m-0 leading-relaxed">
+                        Comprime el <strong class="text-surface-200">contenido</strong> de la carpeta de publicacion en un ZIP listo para subir.
+                    </p>
+                </li>
+            </ol>
+            } @else {
+            <h1 class="text-3xl sm:text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-surface-0 m-0 mb-3">
+                Deploy<br />Center
+            </h1>
+            <p class="text-sm leading-relaxed text-surface-300 m-0 mb-6 sm:mb-8 max-w-[280px]">
+                Sube, valida y publica tus proyectos con un flujo simple desde cualquier dispositivo.
+            </p>
+            <ul class="list-none p-0 m-0 grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 gap-3">
+                <li class="flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-300"
+                    [class.bg-white/10]="!!selectedType">
+                    <span class="text-xs font-bold tabular-nums w-5 text-center shrink-0 transition-colors duration-300"
+                        [class.text-surface-200]="!!selectedType" [class.text-surface-100]="!selectedType">01</span>
+                    <div class="w-px h-6 shrink-0 rounded-full transition-colors duration-300"
+                        [class.bg-indigo-400]="!!selectedType" [class.bg-white/25]="!selectedType"></div>
+                    <div class="flex flex-col gap-px overflow-hidden">
+                        <strong class="text-[0.78rem] font-semibold leading-none transition-colors duration-300"
+                            [class.text-white]="!!selectedType" [class.text-surface-200]="!selectedType">Tipo</strong>
+                        <span class="text-[0.72rem] truncate transition-colors duration-300"
+                            [class.text-surface-900]="!!selectedType" [class.text-surface-100]="!selectedType">{{ selectedTypeLabel }}</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-300"
+                    [class.bg-white/10]="!!projectName.trim()">
+                    <span class="text-xs font-bold tabular-nums w-5 text-center shrink-0 transition-colors duration-300"
+                        [class.text-surface-200]="!!projectName.trim()" [class.text-surface-100]="!projectName.trim()">02</span>
+                    <div class="w-px h-6 shrink-0 rounded-full transition-colors duration-300"
+                        [class.bg-indigo-400]="!!projectName.trim()" [class.bg-white/25]="!projectName.trim()"></div>
+                    <div class="flex flex-col gap-px overflow-hidden">
+                        <strong class="text-[0.78rem] font-semibold leading-none transition-colors duration-300"
+                            [class.text-white]="!!projectName.trim()" [class.text-surface-200]="!projectName.trim()">Proyecto</strong>
+                        <span class="text-[0.72rem] truncate transition-colors duration-300"
+                            [class.text-surface-900]="!!projectName.trim()" [class.text-surface-100]="!projectName.trim()">{{ projectName.trim() || 'Nombre pendiente' }}</span>
+                    </div>
+                </li>
+                <li class="flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-300"
+                    [class.bg-white/10]="!!selectedFile">
+                    <span class="text-xs font-bold tabular-nums w-5 text-center shrink-0 transition-colors duration-300"
+                        [class.text-surface-200]="!!selectedFile" [class.text-surface-100]="!selectedFile">03</span>
+                    <div class="w-px h-6 shrink-0 rounded-full transition-colors duration-300"
+                        [class.bg-indigo-400]="!!selectedFile" [class.bg-white/25]="!selectedFile"></div>
+                    <div class="flex flex-col gap-px overflow-hidden">
+                        <strong class="text-[0.78rem] font-semibold leading-none transition-colors duration-300"
+                            [class.text-white]="!!selectedFile" [class.text-surface-200]="!selectedFile">ZIP</strong>
+                        <span class="text-[0.72rem] truncate transition-colors duration-300"
+                            [class.text-surface-900]="!!selectedFile" [class.text-surface-100]="!selectedFile">{{ selectedFile ? selectedFile.name : 'Archivo pendiente' }}</span>
+                    </div>
+                </li>
+            </ul>
+            }
+        </div>
+
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <div class="absolute w-80 h-80 -bottom-24 -right-14 rounded-full"
+                style="background: radial-gradient(circle, rgba(99,102,241,0.08), transparent 70%)"></div>
+            <div class="absolute w-44 h-44 -top-12 -left-8 rounded-full"
+                style="background: radial-gradient(circle, rgba(148,163,184,0.07), transparent 70%)"></div>
+        </div>
+    </aside>
+
+    <main class="liquid-glass rounded-2xl flex items-center justify-center p-5 sm:p-8 lg:p-12 order-1 xl:order-2">
+        <div class="w-full max-w-[560px] flex flex-col gap-6 sm:gap-8">
+
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-[-0.02em] text-surface-0 m-0 mb-1">Nuevo despliegue</h2>
+                <p class="text-sm text-surface-300 m-0">
+                    Completa los campos, revisa el resumen y confirma el inicio del deploy.
+                </p>
+            </div>
+
+            <div class="deploy-form-grid flex flex-col gap-5">
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[0.75rem] font-semibold tracking-[0.05em] uppercase text-surface-200">Tipo de proyecto</label>
+                    <p-select [options]="typeOptions" [(ngModel)]="selectedType" optionLabel="label" optionValue="value"
+                        class="!appearance-none !border !border-white/10 !w-full !bg-white/10 !shadow-sm"
+                        placeholder="Selecciona una tecnologia">
+                        <ng-template #selectedItem let-item>
+                            <div class="flex items-center gap-2">
+                                <i [class]="item.icon"></i>
+                                <span>{{ item.label }}</span>
+                            </div>
+                        </ng-template>
+                        <ng-template #item let-item>
+                            <div class="flex items-center gap-2">
+                                <i [class]="item.icon"></i>
+                                <span>{{ item.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[0.75rem] font-semibold tracking-[0.05em] uppercase text-surface-200">Nombre del proyecto</label>
+                    <input pInputText type="text" [(ngModel)]="projectName"
+                        class="!appearance-none !border !border-white/10 !w-full !bg-white/10 !text-black placeholder:!text-surface-700 !shadow-sm"
+                        placeholder="ej. portal-ciudadano" />
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-[0.75rem] font-semibold tracking-[0.05em] uppercase text-surface-200">Archivo ZIP</label>
+                    <div class="border-[1.5px] rounded-xl p-4 sm:p-6 cursor-pointer transition-colors duration-200 min-h-[170px] sm:min-h-[120px]"
+                        [ngClass]="selectedFile
+                            ? 'border-solid border-green-400/50 bg-green-500/5'
+                            : isDragOver
+                                ? 'border-dashed border-indigo-400 bg-indigo-500/10'
+                                : 'border-dashed border-white/25 bg-white/10'"
+                        (dragover)="onDragOver($event)"
+                        (dragleave)="onDragLeave()"
+                        (drop)="onDrop($event)"
+                        (click)="fileInput.click()">
+
+                        <input #fileInput type="file" accept=".zip" class="hidden" (change)="onFileSelected($event)" />
+
+                        @if (selectedFile) {
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-3.5 h-full justify-center">
+                            <i class="pi pi-file-arrow-up text-2xl text-green-400"></i>
+                            <div class="flex-1 flex flex-col gap-[2px] overflow-hidden text-center sm:text-left">
+                                <span class="text-sm font-semibold text-surface-0 truncate">{{ selectedFile.name }}</span>
+                                <span class="text-[0.72rem] text-surface-400">{{ formatFileSize(selectedFile.size) }}</span>
+                            </div>
+                            <button
+                                class="self-center sm:self-auto bg-white/20 border border-white/20 rounded-lg min-w-8 w-8 h-8 flex items-center justify-center cursor-pointer text-surface-400 hover:text-red-400 hover:border-red-400/40 hover:bg-red-500/10 transition-colors shrink-0"
+                                (click)="$event.stopPropagation(); clearFile()">
+                                <i class="pi pi-times text-xs"></i>
+                            </button>
+                        </div>
+                        } @else {
+                        <div class="flex flex-col items-center justify-center gap-2 text-center h-full">
+                            <i class="pi pi-upload text-2xl text-surface-300 mb-1"></i>
+                            <span class="text-sm text-surface-200 leading-relaxed">
+                                Arrastra tu ZIP aqui o <u class="text-primary-300 cursor-pointer">seleccionalo</u>
+                            </span>
+                            <span class="text-[0.72rem] text-surface-400">Solo archivos .zip</span>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+<!-- 
+            <div class="deploy-summary rounded-2xl px-4 py-4 sm:px-5 sm:py-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                    <div>
+                        <span class="deploy-summary__label">Tipo</span>
+                        <p class="deploy-summary__value">{{ selectedTypeLabel }}</p>
+                    </div>
+                    <div>
+                        <span class="deploy-summary__label">Proyecto</span>
+                        <p class="deploy-summary__value">{{ projectName.trim() || 'Pendiente' }}</p>
+                    </div>
+                    <div>
+                        <span class="deploy-summary__label">Archivo</span>
+                        <p class="deploy-summary__value">{{ selectedFile?.name || 'Pendiente' }}</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="flex flex-col gap-2.5">
+                <p-button label="Iniciar deploy" icon="pi pi-arrow-right" iconPos="right" styleClass="w-full"
+                    size="large" [loading]="isLoading()" [disabled]="!canSubmit" (onClick)="openConfirmDeploy()" />
+                @if (!canSubmit && !isLoading()) {
+                <span class="text-[0.75rem] text-surface-200 text-center">
+                    Completa todos los campos para continuar
+                </span>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+<p-dialog
+    header="Confirma los datos del deploy"
+    [visible]="confirmDeployVisible()"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: 'min(92vw, 34rem)' }"
+    (visibleChange)="confirmDeployVisible.set($event)">
+    <div class="confirm-dialog">
+        <p class="confirm-dialog__lead">
+            Revisa que el tipo, nombre del proyecto y archivo ZIP sean correctos antes de continuar.
+        </p>
+
+        <div class="confirm-dialog__card">
+            <div class="confirm-dialog__row">
+                <span>Tipo</span>
+                <strong>{{ selectedTypeLabel }}</strong>
+            </div>
+            <div class="confirm-dialog__row">
+                <span>Proyecto</span>
+                <strong>{{ projectName.trim() }}</strong>
+            </div>
+            <div class="confirm-dialog__row">
+                <span>ZIP</span>
+                <strong>{{ selectedFile?.name }}</strong>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="dialog-actions">
+            <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="closeDialogs()" />
+            <p-button label="Continuar" (onClick)="proceedToFinalConfirm()" />
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog
+    header="Confirmacion final"
+    [visible]="finalConfirmVisible()"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [style]="{ width: 'min(92vw, 30rem)' }"
+    (visibleChange)="finalConfirmVisible.set($event)">
+    <div class="confirm-dialog">
+        <p class="confirm-dialog__lead">
+            Al confirmar, el deploy iniciara inmediatamente y se mostrara el spinner hasta recibir la respuesta del servidor.
+        </p>
+
+        <div class="confirm-dialog__warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>Verifica que el archivo ZIP ya sea la version final lista para publicar.</span>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class="dialog-actions">
+            <p-button label="Volver" severity="secondary" [text]="true" (onClick)="finalConfirmVisible.set(false); confirmDeployVisible.set(true)" />
+            <p-button label="Confirmar e iniciar" (onClick)="onSubmit()" />
+        </div>
+    </ng-template>
+</p-dialog>

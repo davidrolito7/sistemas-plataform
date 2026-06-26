@@ -1,0 +1,175 @@
+@import 'primeicons/primeicons.css';
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@tailwind components;
+
+@layer tailwind-utilities {
+  @tailwind utilities;
+}
+
+
+
+:root {
+  --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================
+   ESCALA GLOBAL
+   ============================================ */
+
+/* Móvil / tablet: tamaño normal */
+html {
+  font-size: 90%;
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    min-height: 100%;
+    background: #315d53;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+/* ============================================
+   MODO OSCURO - Transition
+   ============================================ */
+::view-transition-group(root) {
+  animation-timing-function: var(--expo-out);
+}
+
+::view-transition-new(root) {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="40" cy="0" r="18" fill="white" filter="url(%23blur)"/></svg>') top right / 0 no-repeat;
+  mask-origin: content-box;
+  animation: scale 1s;
+  animation-fill-mode: both;
+  transform-origin: top right;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+@keyframes scale {
+  to {
+    mask-size: 350vmax;
+  }
+}
+
+/* ============================================
+   BOTONES PERSONALIZADOS
+   Enfoque único: Tailwind @apply sobre <p-button>.
+   Las clases se aplican al <button> generado por PrimeNG
+   vía [styleClass]="'btn-secondary'".
+   ============================================ */
+
+/* Botón secundario (café) */
+.btn-secondary {
+  @apply bg-[#b2915b] hover:bg-[#9a7b4e] active:bg-[#7f6542] text-white border-0;
+}
+
+/* Botón terciario / acción (terracota) */
+.btn-tertiary {
+  @apply bg-[#c46a4a] hover:bg-[#b85f43] active:bg-[#9e523a] text-white border-0;
+}
+
+/* Botón eliminar (rojo) */
+.btn-rojo {
+  @apply bg-red-500 hover:bg-red-600 active:bg-red-700 text-white border-0;
+}
+
+/* Botón info (azul) */
+.btn-info {
+  @apply bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white border-0;
+}
+
+/* Botón outlined café - para acciones secundarias */
+.btn-outline {
+  @apply bg-transparent hover:bg-[#b2915b]/10 active:bg-[#b2915b]/20 text-[#7f6542] border border-[#b2915b];
+}
+
+/* ============================================
+   FONDOS - Variantes de color secundario
+   ============================================ */
+.bg-secondary {
+  background-color: #b2915b;
+}
+
+.dark .bg-secondary {
+  background-color: #b2915b;
+}
+
+
+
+/* Liquid Glass */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055) 0%,
+      rgba(255, 255, 255, 0.022) 24%,
+      rgba(255, 255, 255, 0.01) 50%,
+      rgba(255, 255, 255, 0.022) 76%,
+      rgba(255, 255, 255, 0.055) 100%
+    );
+
+  backdrop-filter: blur(5px) saturate(1.28) contrast(1.08);
+  -webkit-backdrop-filter: blur(5px) saturate(1.28) contrast(1.08);
+
+  border: none;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.075),
+    0 14px 36px rgba(0, 0, 0, 0.1);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.018) 18%,
+      rgba(255, 255, 255, 0.008) 50%,
+      rgba(255, 255, 255, 0.018) 82%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+
+  opacity: 0.75;
+}
+
+.liquid-glass::after {
+  content: none;
+}
+
+.liquid-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+:host ::ng-deep p-select .p-select-label {
+  color: black !important;
+}
+
+:host ::ng-deep p-select .p-placeholder {
+  color: var(--p-surface-700) !important;
+}

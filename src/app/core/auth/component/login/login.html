@@ -1,0 +1,51 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<div class="min-h-dvh md:h-dvh overflow-hidden px-6 pt-[max(env(safe-area-inset-top),1rem)] pb-[max(env(safe-area-inset-bottom),1rem)] md:pt-0 md:pb-0 flex items-center justify-center backdrop-blur-3xl !bg-cover !bg-center !bg-no-repeat bg-[#e7efe9] md:bg-transparent"
+    style="background-image: url('colors.png')">
+    <div
+        class="panel liquid-glass px-10 py-5 flex flex-col items-center gap-12 w-full rounded-2xl max-w-md">
+        <div class="flex flex-col items-center gap-4 w-full">
+            <!-- Logo en imagen en lugar de SVG -->
+            <img src="deploy.png" alt="Logo" class="w-48 h-auto" />
+            <div class="flex flex-col gap-2 w-full">
+                <div class="text-center uppercase text-lg md:text-xl font-semibold text-black leading-tight">
+                    Bienvenido
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col items-center gap-8 w-full">
+            <div class="flex flex-col gap-6 w-full">
+                <p-iconfield icon-position="left">
+                    <p-inputicon class="pi pi-user !text-black/70"></p-inputicon>
+                    <input pInputText type="text" [(ngModel)]="usuario" (keydown.enter)="passwordFocus()"
+                        class="!appearance-none !border !border-white/10 !w-full !bg-white/10 !text-black placeholder:!text-black/70 !shadow-sm"
+                        placeholder="Usuario" />
+                </p-iconfield>
+                <p-iconfield icon-position="left">
+                    <p-inputicon class="pi pi-lock !text-black/70"></p-inputicon>
+                    <input pInputText [type]="verPassword ? 'text' : 'password'" [(ngModel)]="contrasenia"
+                        (keydown.enter)="passwordEnter()" #passwordInput
+                        class="!appearance-none !border !border-white/10 !w-full !bg-white/10 !text-black placeholder:!text-black/70 !shadow-sm"
+                        placeholder="Contraseña" />
+                    <p-inputicon class="cursor-pointer !text-black/70 hover:!text-black" (click)="togglePassword()">
+                        <i [class]="verPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+                    </p-inputicon>
+                </p-iconfield>
+                <span class="font-normal text-sm sm:text-base sm:font-medium no-underline ml-2 text-right  text-black/80 cursor-pointer hover:text-black/90"
+                    (click)="forgotPassword()">¿Olvidaste tu Contraseña?</span>
+                <div class="flex items-center justify-between gap-8">
+                    <div class="flex items-center text-black/80 ">
+                        <p-checkbox [(ngModel)]="recordar" id="rememberme" [binary]="true" styleClass="mr-1"></p-checkbox>
+                        <label for="rememberme">Recordarme</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <button pButton (click)="validarUsuario()" fluid>
+                <span pButtonLabel>Continuar</span>
+            </button>
+        </div>
+        <!--<a class="text-white/80 cursor-pointer hover:text-white/90" (click)="forgotPassword()">¿Olvidaste tu Contraseña?</a>-->
+    </div>
+</div>
+<p-toast></p-toast>

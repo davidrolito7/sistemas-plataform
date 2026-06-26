@@ -1,0 +1,131 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep p-select .p-select-label {
+  color: black !important;
+}
+
+:host ::ng-deep p-select .p-placeholder {
+  color: var(--p-surface-700) !important;
+}
+
+:host ::ng-deep .p-dialog {
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  padding: 1.25rem 1.5rem 0.75rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+
+.deploy-summary {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06)),
+    rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.deploy-summary__label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(226, 232, 240, 0.7);
+  margin-bottom: 0.35rem;
+}
+
+.deploy-summary__value {
+  margin: 0;
+  color: #fff;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.confirm-dialog__lead {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.confirm-dialog__card {
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #f8fafc, #eef2ff);
+  border: 1px solid #dbe4ff;
+  padding: 1rem;
+}
+
+.confirm-dialog__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  color: #334155;
+}
+
+.confirm-dialog__row + .confirm-dialog__row {
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.confirm-dialog__row strong {
+  text-align: right;
+  color: #0f172a;
+  overflow-wrap: anywhere;
+}
+
+.confirm-dialog__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  background: #fff7ed;
+  color: #9a3412;
+  border: 1px solid #fdba74;
+  padding: 0.95rem 1rem;
+}
+
+.confirm-dialog__warning i {
+  margin-top: 0.1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .confirm-dialog__row {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .confirm-dialog__row strong {
+    text-align: left;
+  }
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .deploy-shell {
+    padding-bottom: 1rem;
+  }
+}

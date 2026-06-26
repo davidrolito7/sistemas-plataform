@@ -1,0 +1,25 @@
+<h1
+  class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-4 leading-[0.95] break-normal"
+  style="letter-spacing: -0.04em;"
+>
+  <span
+    *ngFor="let line of lines; let lineIndex = index; trackBy: trackByIndex"
+    class="block"
+  >
+    <span
+      *ngFor="let word of line; let wordIndex = index; trackBy: trackByIndex"
+      class="inline-block whitespace-nowrap mr-[0.25em]"
+    >
+      <span
+        *ngFor="let char of word.characters; let charIndex = index; trackBy: trackByIndex"
+        class="inline-block transition-[opacity,transform] ease-out will-change-transform"
+        [style.opacity]="visible ? 1 : 0"
+        [style.transform]="visible ? 'translateX(0)' : 'translateX(-18px)'"
+        [style.transition-delay.ms]="getCharacterDelay(lineIndex, wordIndex, charIndex)"
+        [style.transition-duration.ms]="duration"
+      >
+        {{ char }}
+      </span>
+    </span>
+  </span>
+</h1>

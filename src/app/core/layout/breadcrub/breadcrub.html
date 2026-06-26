@@ -1,0 +1,42 @@
+<nav aria-label="Breadcrumb" class="flex items-center gap-1 overflow-x-auto text-xs font-medium whitespace-nowrap">
+    <a routerLink="/" aria-label="Inicio" class="inline-flex items-center justify-center h-7
+    text-surface-200 hover:text-surface-0
+    sm:text-surface-500 sm:hover:text-surface-900
+    dark:text-surface-400 dark:hover:text-surface-0
+    transition-colors">
+
+        <i class="pi pi-home text-xs border-b border-transparent hover:border-current"></i>
+    </a>
+
+    @for (item of breadcrumbs; track item.label; let last = $last) {
+    <i class="pi pi-chevron-right text-[0.55rem] shrink-0
+        text-surface-200
+        sm:text-surface-500
+        dark:text-surface-600" aria-hidden="true">
+    </i>
+
+    @if (last) {
+    <span aria-current="page" class="font-semibold
+            text-surface-100
+            sm:text-surface-800
+            dark:text-surface-0
+            border-b border-current">
+
+        {{ item.label }}
+    </span>
+    }
+
+    @if (!last) {
+    <a [routerLink]="item.routerLink" class="inline-flex items-center justify-center h-7
+            text-surface-200 hover:text-surface-0
+            sm:text-surface-500 sm:hover:text-surface-800
+            dark:text-surface-400 dark:hover:text-surface-0
+            transition-colors">
+
+        <span class="border-b border-transparent hover:border-current">
+            {{ item.label }}
+        </span>
+    </a>
+    }
+    }
+</nav>

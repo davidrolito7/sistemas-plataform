@@ -1,0 +1,75 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.liquid-glass {
+  background: rgba(0, 0, 0, 0.38);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255,255,255,0.16),
+    rgba(255,255,255,0) 45%
+  );
+  pointer-events: none;
+}
+
+.birthday-slider {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.birthday-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.birthday-card {
+  flex: 0 0 82%;
+}
+
+@media (min-width: 640px) {
+  .birthday-card {
+    flex-basis: 68%;
+  }
+}
+
+@media (min-width: 768px) {
+  .birthday-card {
+    flex-basis: calc((100% - 1.25rem) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .birthday-card {
+    flex-basis: calc((100% - 1.25rem) / 2);
+  }
+}
+
+

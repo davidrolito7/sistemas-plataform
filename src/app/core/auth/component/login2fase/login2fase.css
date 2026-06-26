@@ -1,0 +1,16 @@
+/* Ensure the password toggle (eye) shows pointer cursor */
+.p-password .p-password-toggle,
+.p-password .p-password-reveal,
+.p-password .p-password-revealer,
+.p-password .p-input-icon,
+.p-password .p-input-icon-right,
+.p-password .pi-eye,
+.p-password .pi-eye-slash {
+	cursor: pointer !important;
+}
+
+/* Fallback: if the toggle is a button inside the component */
+.p-password button, .p-password .p-button {
+	cursor: pointer !important;
+}
+

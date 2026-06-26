@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  height: 100dvh;      /* mejor que 100vh en algunos navegadores */
+  overflow: hidden;    /* elimina el scrollbar */
+}
+.panel{
+    min-height: 100px;
+    box-shadow: 5px 5px 15px rgb(46, 46, 45);
+    border-radius: 10px;
+    /*margin-top:10px;*/
+}

@@ -1,0 +1,7 @@
+<div
+  class="transition-opacity"
+  [ngClass]="[containerClass, visible ? 'opacity-100' : 'opacity-0']"
+  [style.transition-duration.ms]="duration"
+>
+  <ng-content></ng-content>
+</div>

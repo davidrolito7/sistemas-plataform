@@ -1,0 +1,67 @@
+<app-spinner [isLoading]="isLoading()"></app-spinner>
+<div
+    class="relative min-h-screen lg:h-screen overflow-hidden bg-surface-0 dark:bg-surface-950 flex flex-col lg:flex-row">
+
+    <!-- Lado Izquierdo: Formulario -->
+    <div
+        class="w-full lg:w-5/12 flex flex-col justify-center items-center lg:items-start min-h-screen z-20 relative shrink-0 overflow-visible">
+        <div class="w-full max-w-2xl px-6 py-8 lg:p-10 xl:p-12 text-left mx-auto">
+            <h1
+                class="text-3xl sm:text-4xl 2xl:text-5xl font-bold text-surface-900 dark:text-surface-0 mb-6 !leading-tight">
+                <span class="block">Configura tu acceso</span>
+                <span class="block text-primary">selecciona adscripcion y perfil</span>
+            </h1>
+            <p class="text-surface-600 dark:text-surface-200 mb-6">
+                Selecciona primero la adscripcion y despues el perfil con el que deseas ingresar al sistema.
+            </p>
+            <div class="flex flex-col gap-6">
+                <!--SELECCIONA ADSCRIPCION /AREA -->
+                <div class="flex flex-col w-full">
+                    <label for="areaSelect" class="block mb-2 text-sm font-medium">Adscripcion</label>
+                    <p-select inputId="areaSelect" [options]="listaAreas()" optionLabel="area" appendTo="body"
+                        optionValue="idArea" [ngModel]="areaSeleccionada()" (ngModelChange)="onAreaChange($event)"
+                        placeholder="Selecciona un area" styleClass="w-full" />
+                </div>
+                <!--SELECCIONA PERFIL-->
+                <div class="flex flex-col    w-full">
+                    <label for="perfilSelect" class="block mb-2 text-sm font-medium">Perfil</label>
+                    <p-select inputId="perfilSelect" [options]="perfiles()" optionLabel="descripcion" appendTo="body"
+                        optionValue="idSistemaPerfil" [ngModel]="perfilSeleccionado()"
+                        (ngModelChange)="onPerfilChange($event)" placeholder="Selecciona tu perfil" styleClass="w-full" />
+                </div>
+                <!--SELECCIONA SUBAREA-->
+                <div class="flex flex-col w-full">
+                    <label for="subAreaSelect" class="block mb-2 text-sm font-medium">Subarea</label>
+                    <p-select inputId="subAreaSelect" [options]="subAreas()" optionLabel="descripcion"
+                        optionValue="idSubArea" [ngModel]="subAreaId()" appendTo="body"
+                        (ngModelChange)="onSubAreaChange($event)" placeholder="Selecciona una subarea" styleClass="w-full" />
+                </div>
+                <div class="flex items-center text-white/80">
+                    <p-checkbox [(ngModel)]="recordar" id="rememberme" [binary]="true" styleClass="mr-3"></p-checkbox>
+                    <label class="text-surface-600 dark:text-surface-200">Recordar perfil seleccionado</label>
+                </div>
+                <div
+                    class="flex flex-row items-stretch gap-4 justify-end">
+
+                    <p-button type="button" (onClick)="onLogout()" outlined>
+                        <span pButtonLabel>Salir</span>
+                    </p-button>
+                    <p-button type="button" (click)="continuar()">
+                        <span pButtonIcon class="pi pi-user mr-1"></span>
+                        <span pButtonLabel>Continuar</span>
+                    </p-button>
+
+                </div>
+            </div>
+
+        </div>
+        <p-toast></p-toast>
+    </div>
+
+    <!-- Lado Derecho: Imagen -->
+    <div class="hidden lg:block lg:w-7/12 relative h-full z-10 shrink-0">
+        <img src="config.png" alt="Fondo"
+            class="absolute inset-0 h-full w-full object-cover lg:[clip-path:polygon(12%_0,100%_0%,100%_100%,0_100%)]" />
+    </div>
+
+</div>

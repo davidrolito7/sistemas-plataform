@@ -1,0 +1,468 @@
+<div class="flex flex-col w-full">
+    <!-- <app-notificacion-toast [notificacion]="notificacionToast()" (cerrada)="onToastCerrada()"> -->
+    <!-- </app-notificacion-toast> -->
+
+    <header
+        class="liquid-glass flex items-center justify-between p-2 rounded-2xl ">
+        <div class="flex items-center gap-2 min-w-0">
+            <button type="button"
+                class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-surface-100 hover:bg-surface-200 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors text-color shrink-0"
+                (click)="drawerService.open()" aria-label="Abrir menu">
+
+                <i class="pi pi-bars text-base"></i>
+            </button>
+
+            <div class="sm:hidden min-w-0">
+                <div class="text-sm font-semibold text-surface-100 dark:text-surface-0 leading-tight truncate">
+                    {{ abogadoNombre }}
+                </div>
+
+                <div class="text-[11px] text-surface-100 dark:text-surface-0 leading-tight truncate max-w-[11rem]">
+                    {{ perfilNombre ? perfilNombre : 'Mi cuenta' }}
+                </div>
+            </div>
+
+            <!-- <img src="logo.png" alt="Logo" class="hidden sm:block h-12 sm:h-12 w-auto shrink-0 ml-3" /> -->
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0 mr-1">
+            <div class="hidden md:flex flex-col text-right">
+                <span class="text-sm font-semibold leading-tight">
+                    {{ abogadoNombre }}
+                </span>
+
+                <span class="text-xs  mt-0.5">
+                    {{ areaNombre ? (areaNombre) : '' }}
+                    {{ areaNombre && perfilNombre ? ' · ' : '' }}
+                    {{ perfilNombre ? (perfilNombre) : '' }}
+                    {{ perfilNombre && subAreaNombre ? ' · ' : '' }}
+                    {{ subAreaNombre ? (subAreaNombre) : '' }}
+                </span>
+            </div>
+
+            <p-avatar [image]="abogadoFotoUrl" (click)="visibleDrawer = true; drawerMobileTab = 'perfil'" shape="circle"
+                styleClass="cursor-pointer border-2 border-transparent hover:border-primary transition-all
+         !w-[48px] !h-[48px] !min-w-[48px] !min-h-[48px]">
+            </p-avatar>
+
+            <!-- <button type="button"
+                class="hidden sm:flex relative w-[48px] h-[48px] items-center justify-center rounded-full border border-surface-200 bg-surface-100 text-primary shadow-sm hover:bg-surface-200 dark:border-surface-700 dark:bg-surface-800 dark:text-primary-300 dark:hover:bg-surface-700 cursor-pointer transition-all"
+                (click)="visibleNotificaciones = true" aria-label="Abrir notificaciones">
+
+                <i class="pi pi-bell text-xl"></i>
+
+                @if (pendientes() > 0) {
+                <span
+                    class="absolute top-0 right-0 z-50 w-5 h-5 text-[11px] font-bold text-white bg-red-500 rounded-full flex items-center justify-center shadow-sm border-2 border-surface-0 dark:border-surface-900">
+                    {{ pendientes() }}
+                </span>
+                }
+            </button> -->
+        </div>
+    </header>
+
+</div>
+
+<p-drawer [(visible)]="visibleDrawer" position="right" appendTo="body" [style]="{ width: 'min(80vw, 25rem)' }">
+    <ng-template #headless>
+        <form class="flex flex-col h-full overflow-hidden">
+            <div class="shrink-0 px-2 py-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <p-avatar [image]="abogadoFotoUrl" size="large" shape="circle" styleClass="shrink-0">
+                    </p-avatar>
+
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-semibold text-surface-900 dark:text-surface-0 leading-5 truncate"
+                            [title]="abogadoNombre">
+                            {{ abogadoNombre }}
+                        </div>
+
+                        @if (areaNombre) {
+                        <div
+                            class="mt-0.5 flex items-center gap-1.5 text-xs text-surface-500 dark:text-surface-400 min-w-0">
+                            <i class="pi pi-building text-[10px] shrink-0"></i>
+
+                            <span class="truncate" [title]="areaNombre">
+                                {{ areaNombre }}
+                            </span>
+                        </div>
+                        }
+
+                        @if (perfilNombre) {
+                        <div
+                            class="mt-0.5 flex items-center gap-1.5 text-xs text-surface-500 dark:text-surface-400 min-w-0">
+                            <i class="pi pi-user text-[10px] shrink-0"></i>
+
+                            <span class="truncate" [title]="perfilNombre">
+                                {{ perfilNombre }}
+                            </span>
+                        </div>
+                        }
+                    </div>
+
+                    <p-button (onClick)="onLogout()" pTooltip="Cerrar Sesion" tooltipPosition="left"
+                        icon="pi pi-sign-out" text="" rounded="" severity="secondary" styleClass="shrink-0">
+                    </p-button>
+                </div>
+            </div>
+
+            <div class=" p-2 shrink-0">
+                <div
+                    class="relative grid grid-cols-2 rounded-2xl bg-surface-100 dark:bg-surface-800 p-1 shadow-inner border border-surface-200 dark:border-surface-700 overflow-hidden">
+                    <div class="absolute left-1 top-1 bottom-1 w-[calc(50%-0.25rem)] rounded-xl bg-primary shadow-lg shadow-primary/25 transition-transform duration-300 ease-out"
+                        [class.translate-x-full]="drawerMobileTab === 'notificaciones'"
+                        [class.translate-x-0]="drawerMobileTab === 'perfil'">
+                    </div>
+
+                    <button type="button" (click)="drawerMobileTab = 'perfil'"
+                        class="relative z-10 flex items-center justify-center gap-2 rounded-xl px-2.5 py-2.5 text-sm font-semibold transition-colors duration-300"
+                        [ngClass]="drawerMobileTab === 'perfil'
+                            ? 'text-primary-contrast'
+                            : 'text-surface-600 dark:text-surface-300'">
+
+                        <i class="pi pi-user"></i>
+                        <span>Mi perfil</span>
+                    </button>
+
+                    <button type="button" (click)="drawerMobileTab = 'notificaciones'"
+                        class="relative z-10 flex items-center justify-center gap-2 rounded-xl px-2.5 py-2.5 text-sm font-semibold transition-colors duration-300"
+                        [ngClass]="drawerMobileTab === 'notificaciones'
+                            ? 'text-primary-contrast'
+                            : 'text-surface-600 dark:text-surface-300'">
+
+                        <span class="relative inline-flex items-center">
+                            <i class="pi pi-bell"></i>
+
+                            @if (pendientes() > 0) {
+                            <span
+                                class="absolute -top-2 -right-2 min-w-4 h-4 px-1 text-[10px] font-bold text-white bg-red-500 rounded-full flex items-center justify-center">
+                                {{ pendientes() }}
+                            </span>
+                            }
+                        </span>
+
+                        <span>Notificaciones</span>
+                    </button>
+                </div>
+            </div>
+
+            @if (drawerMobileTab === 'perfil') {
+            <div class="flex flex-col overflow-y-auto gap-3 p-2">
+                <div
+                    class="group rounded-2xl border border-surface-200 border-dashed dark:border-surface-700 bg-surface-0 dark:bg-surface-900 overflow-hidden">
+                    <button type="button"
+                        class="w-full flex items-center gap-3 p-3 cursor-pointer hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors text-left"
+                        (click)="toggleTema()" [attr.aria-label]="temaAriaLabel()" [attr.aria-pressed]="temaOscuro()">
+
+                        <div
+                            class="w-11 h-11 rounded-xl flex items-center justify-center bg-primary-50 dark:bg-primary-900/30 text-primary shrink-0">
+                            <i class="pi text-lg" [class.pi-sun]="temaOscuro()" [class.pi-moon]="!temaOscuro()"></i>
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-semibold text-surface-900 dark:text-surface-0">
+                                Tema
+                            </div>
+                            <div class="text-xs text-surface-500 dark:text-surface-400 truncate">
+                                Cambiar a modo {{ temaOscuro() ? 'claro' : 'oscuro' }}
+                            </div>
+                        </div>
+
+                        <div
+                            class="h-8 px-3 rounded-full bg-primary text-primary-contrast text-xs font-semibold flex items-center justify-center shrink-0">
+                            {{ temaOscuro() ? 'Claro' : 'Oscuro' }}
+                        </div>
+                    </button>
+                </div>
+
+                <div
+                    class="group rounded-2xl border border-surface-200 border-dashed dark:border-surface-700 bg-surface-0 dark:bg-surface-900 overflow-hidden">
+                    <button type="button"
+                        class="w-full flex items-center gap-3 p-3 cursor-pointer hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors text-left"
+                        (click)="onChangeProfile()">
+
+                        <div
+                            class="w-11 h-11 rounded-xl flex items-center justify-center bg-primary-50 dark:bg-primary-900/30 text-primary shrink-0">
+                            <i class="pi pi-users text-lg"></i>
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-semibold text-surface-900 dark:text-surface-0">
+                                Perfil
+                            </div>
+                            <div class="text-xs text-surface-500 dark:text-surface-400 truncate">
+                                Cambiar perfil activo
+                            </div>
+                        </div>
+
+                        <div
+                            class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-300 group-hover:bg-primary group-hover:text-primary-contrast transition-colors shrink-0">
+                            <i class="pi pi-chevron-right text-xs"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <div
+                    class="group rounded-2xl border border-surface-200 border-dashed dark:border-surface-700 bg-surface-0 dark:bg-surface-900 overflow-hidden">
+                    <button type="button"
+                        class="w-full flex items-center gap-3 p-3 cursor-pointer hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors text-left"
+                        (click)="verPerfil()">
+
+                        <div
+                            class="w-11 h-11 rounded-xl flex items-center justify-center bg-primary-50 dark:bg-primary-900/30 text-primary shrink-0">
+                            <i class="pi pi-id-card text-lg"></i>
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-semibold text-surface-900 dark:text-surface-0">
+                                Datos personales
+                            </div>
+                            <div class="text-xs text-surface-500 dark:text-surface-400 truncate">
+                                Consultar informacion de tu cuenta
+                            </div>
+                        </div>
+
+                        <div
+                            class="w-8 h-8 rounded-full flex items-center justify-center bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-300 group-hover:bg-primary group-hover:text-primary-contrast transition-colors shrink-0">
+                            <i class="pi pi-chevron-right text-xs"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            }
+
+            <!-- @if (drawerMobileTab === 'notificaciones') {
+            <div class="sm:hidden flex-1 overflow-y-auto px-4 pb-6">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="text-sm font-medium">
+                        Notificaciones sin leer
+                    </span>
+
+                    <span
+                        class="ml-auto text-xs bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300 px-2 py-1 rounded-full">
+                        {{ notificaciones().length }}
+                    </span>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    @if (cargandoNotificaciones()) {
+                    <div
+                        class="text-center text-surface-500 p-8 flex flex-col items-center justify-center min-h-[200px]">
+                        <i class="pi pi-spin pi-spinner text-3xl mb-3 text-primary"></i>
+                        <p class="text-sm">Cargando notificaciones...</p>
+                    </div>
+                    }
+
+                    @if (!cargandoNotificaciones() && notificaciones().length === 0) {
+                    <div
+                        class="text-center text-surface-500 p-8 flex flex-col items-center justify-center min-h-[200px]">
+                        <i class="pi pi-inbox text-4xl mb-3 opacity-40"></i>
+                        <p class="text-sm">No hay notificaciones</p>
+                    </div>
+                    }
+
+                    @for (notif of notificaciones(); track notif.id) {
+                    <div @slideOutRight
+                        class="grid grid-cols-[3rem_1fr] gap-3 p-3 rounded-lg border border-surface-200 dark:border-surface-700 transition-colors cursor-pointer"
+                        [ngClass]="{
+                            'border-l-4 border-l-blue-500': notif.accion === 'NUEVO',
+                            'border-l-4 border-l-orange-500': notif.accion === 'TURNADO',
+                            'border-l-4 border-l-purple-500': notif.accion === 'FORANEO',
+                            'border-l-4 border-l-green-500': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO',
+                            'bg-surface-0 dark:bg-surface-900 hover:bg-surface-50 dark:hover:bg-surface-800/50': !notif.leida,
+                            'bg-surface-50 dark:bg-surface-800/30 opacity-70': notif.leida
+                        }" (click)="marcarNotificacionLeida(notif)">
+
+                        <div class="h-12 w-12 rounded-full flex items-center justify-center text-xs self-center"
+                            [ngClass]="{
+                                'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400': notif.accion === 'NUEVO',
+                                'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400': notif.accion === 'TURNADO',
+                                'bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400': notif.accion === 'FORANEO',
+                                'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                            }">
+
+                            <i class="pi text-lg leading-none" [ngClass]="{
+                                    'pi-inbox': notif.accion === 'NUEVO',
+                                    'pi-send': notif.accion === 'TURNADO',
+                                    'pi-globe': notif.accion === 'FORANEO',
+                                    'pi-bell': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                                }">
+                            </i>
+                        </div>
+
+                        <div class="flex flex-col gap-1.5 min-w-0">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="font-semibold text-sm text-surface-900 dark:text-surface-0 truncate">
+                                        {{ notif.id }}
+                                    </span>
+
+                                    <span
+                                        class="text-xs font-bold px-1.5 py-0.5 rounded whitespace-nowrap flex-shrink-0"
+                                        [ngClass]="{
+                                            'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400': notif.accion === 'NUEVO',
+                                            'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400': notif.accion === 'TURNADO',
+                                            'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400': notif.accion === 'FORANEO',
+                                            'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                                        }">
+                                        {{ notif.accion }}
+                                    </span>
+                                </div>
+
+                                <span
+                                    class="text-xs bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-400 px-2 py-1 rounded font-mono font-semibold flex-shrink-0">
+                                    {{ notif.folio }}
+                                </span>
+                            </div>
+
+                            <p class="text-xs text-surface-600 dark:text-surface-300 leading-snug m-0">
+                                {{ notif.mensaje }}
+                            </p>
+
+                            <div class="flex gap-1 text-xs font-bold">
+                                <span>
+                                    <p class="text-surface-900 dark:text-surface-500">
+                                        {{ notif.origen.area.descripcion }}
+                                    </p>
+                                </span>
+
+                                <span class="text-surface-300 dark:text-surface-600">•</span>
+
+                                <span>
+                                    <p class="text-surface-900 dark:text-surface-500">
+                                        {{ notif.origen.sistemaPerfil.descripcion }}
+                                    </p>
+                                </span>
+
+                                <span class="text-surface-300 dark:text-surface-600">•</span>
+
+                                <span>
+                                    <p class="text-surface-900 dark:text-surface-500">
+                                        {{ notif.origen.subArea.descripcion }}
+                                    </p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            } -->
+        </form>
+    </ng-template>
+</p-drawer>
+
+<p-drawer [(visible)]="visibleNotificaciones" position="right" appendTo="body" [style]="{ width: 'min(80vw, 30rem)' }">
+    <ng-template #header>
+        <div class="flex items-center gap-2">
+            <i class="pi pi-bell text-lg text-primary"></i>
+
+            <span class="font-semibold">
+                Notificaciones
+            </span>
+
+            <span
+                class="ml-auto text-xs bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300 px-2 py-1 rounded-full">
+                {{ notificaciones().length }}
+            </span>
+        </div>
+    </ng-template>
+
+    <div class="flex flex-col gap-2">
+        @if (cargandoNotificaciones()) {
+        <div class="text-center text-surface-500 p-8 flex flex-col items-center justify-center min-h-[200px]">
+            <i class="pi pi-spin pi-spinner text-3xl mb-3 text-primary"></i>
+            <p class="text-sm">Cargando notificaciones...</p>
+        </div>
+        }
+
+        @if (!cargandoNotificaciones() && notificaciones().length === 0) {
+        <div class="text-center text-surface-500 p-8 flex flex-col items-center justify-center min-h-[200px]">
+            <i class="pi pi-inbox text-4xl mb-3 opacity-40"></i>
+            <p class="text-sm">No hay notificaciones</p>
+        </div>
+        }
+
+        @for (notif of notificaciones(); track notif.id) {
+        <div @slideOutRight
+            class="grid grid-cols-[3rem_1fr] gap-3 p-3 rounded-lg border border-surface-200 dark:border-surface-700 transition-colors cursor-pointer"
+            [ngClass]="{
+                'border-l-4 border-l-blue-500': notif.accion === 'NUEVO',
+                'border-l-4 border-l-orange-500': notif.accion === 'TURNADO',
+                'border-l-4 border-l-purple-500': notif.accion === 'FORANEO',
+                'border-l-4 border-l-green-500': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO',
+                'bg-surface-0 dark:bg-surface-900 hover:bg-surface-50 dark:hover:bg-surface-800/50': !notif.leida,
+                'bg-surface-50 dark:bg-surface-800/30 opacity-70': notif.leida
+            }" >
+
+            <div class="h-12 w-12 rounded-full flex items-center justify-center text-xs self-center" [ngClass]="{
+                    'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400': notif.accion === 'NUEVO',
+                    'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400': notif.accion === 'TURNADO',
+                    'bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400': notif.accion === 'FORANEO',
+                    'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                }">
+
+                <i class="pi text-lg leading-none" [ngClass]="{
+                        'pi-inbox': notif.accion === 'NUEVO',
+                        'pi-send': notif.accion === 'TURNADO',
+                        'pi-globe': notif.accion === 'FORANEO',
+                        'pi-bell': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                    }">
+                </i>
+            </div>
+
+            <div class="flex flex-col gap-1.5 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="font-semibold text-sm text-surface-900 dark:text-surface-0 truncate">
+                            {{ notif.id }}
+                        </span>
+
+                        <span class="text-xs font-bold px-1.5 py-0.5 rounded whitespace-nowrap flex-shrink-0" [ngClass]="{
+                                'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400': notif.accion === 'NUEVO',
+                                'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400': notif.accion === 'TURNADO',
+                                'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400': notif.accion === 'FORANEO',
+                                'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO'
+                            }">
+                            {{ notif.accion }}
+                        </span>
+                    </div>
+
+                    <span
+                        class="text-xs bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-400 px-2 py-1 rounded font-mono font-semibold flex-shrink-0">
+                        {{ notif.folio }}
+                    </span>
+                </div>
+
+                <p class="text-xs text-surface-600 dark:text-surface-300 leading-snug m-0">
+                    {{ notif.mensaje }}
+                </p>
+
+                <div class="flex gap-1 text-xs font-bold">
+                    <span>
+                        <p class="text-surface-900 dark:text-surface-500">
+                            {{ notif.origen.area.descripcion }}
+                        </p>
+                    </span>
+
+                    <span class="text-surface-300 dark:text-surface-600">•</span>
+
+                    <span>
+                        <p class="text-surface-900 dark:text-surface-500">
+                            {{ notif.origen.sistemaPerfil.descripcion }}
+                        </p>
+                    </span>
+
+                    <span class="text-surface-300 dark:text-surface-600">•</span>
+
+                    <span>
+                        <p class="text-surface-900 dark:text-surface-500">
+                            {{ notif.origen.subArea.descripcion }}
+                        </p>
+                    </span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</p-drawer>

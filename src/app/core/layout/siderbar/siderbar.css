@@ -1,0 +1,100 @@
+.sidebar-shell {
+    transition: width 280ms ease, box-shadow 280ms ease, background-color 280ms ease;
+    backdrop-filter: blur(10px);
+}
+
+.sidebar-shell--collapsed {
+    width: 5.75rem;
+}
+
+.sidebar-shell--expanded {
+    width: 22rem;
+}
+
+.sidebar-fade {
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-0.35rem);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 240ms ease, opacity 180ms ease, transform 240ms ease;
+}
+
+.sidebar-fade--visible {
+    max-width: 14rem;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sidebar-children {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 280ms ease, opacity 220ms ease;
+}
+
+.sidebar-children > div {
+    overflow: hidden;
+}
+
+.sidebar-children--open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.sidebar-module-button {
+    background: transparent;
+    transition: background-color 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.sidebar-module-button:hover {
+    background: color-mix(in srgb, var(--p-primary-100, #e6f0ec) 60%, transparent);
+}
+
+.sidebar-module-button[aria-pressed='true'] {
+    background: color-mix(in srgb, var(--p-primary-100, #e6f0ec) 78%, white 22%);
+}
+
+.sidebar-module-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: color-mix(in srgb, var(--p-primary-100, #e6f0ec) 72%, white 28%);
+}
+
+.sidebar-children-panel {
+    margin-left: 0.8rem;
+    padding: 0.55rem;
+    border-left: 1px solid color-mix(in srgb, var(--p-surface-300, #d6d6d6) 65%, transparent);
+}
+
+.sidebar-screen-link {
+    min-height: 2.9rem;
+}
+
+.sidebar-screen-link--active {
+    color: var(--p-primary-700, #2f6b58);
+    background: color-mix(in srgb, var(--p-primary-100, #e6f0ec) 78%, white 22%);
+}
+
+.dark .sidebar-screen-link--active {
+    color: var(--p-primary-300, #9fd0bb);
+    background: color-mix(in srgb, var(--p-primary-900, #1f3f35) 42%, transparent);
+}
+
+.sidebar-screen-link:hover {
+    background: color-mix(in srgb, var(--p-surface-200, #ececec) 65%, transparent);
+}
+
+.sidebar-screen-icon {
+    width: 2rem;
+    height: 2rem;
+    background: color-mix(in srgb, var(--p-surface-100, #f5f5f5) 85%, transparent);
+}
+
+.sidebar-screen-icon--active {
+    background: var(--p-primary-600, #487166);
+}
+
+.dark .sidebar-screen-icon--active {
+    background: var(--p-primary-500, #5c8f80);
+}
