@@ -23,8 +23,9 @@ import { areasResponse, responseCatalogoPerfiles, usuarioAreas } from '../../int
 import { GenericResponse } from '../../interface/login.interfaces';
 import { Spinner } from 'src/app/components/spinner/spinner';
 import { PantallasService } from '../../service/pantallas.service';
+import { environment } from 'src/app/environments/environment';
 
-const SISTEMA_ID = 4169;
+const SISTEMA_ID = environment.ConstantsService.idSistema;
 
 interface PersistedSelection {
   recordar: boolean;

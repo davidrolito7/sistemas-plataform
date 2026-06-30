@@ -99,15 +99,13 @@
 </p-drawer>
 
 <div class="h-screen overflow-hidden flex p-2 sm:p-4 gap-4"
-    style="background-image: url('colors.png'); background-size: cover; background-position: center;">
-    <!-- CONTENEDOR UNIFICADO BARRAS LATERALES -->
-    <div class="hidden lg:flex h-[calc(100vh-2rem)] sticky top-4 z-50">
+    style="background-image: url('background.png'); background-size: cover; background-position: center;">
+    <!-- <div class="hidden lg:flex h-[calc(100vh-2rem)] sticky top-4 z-50">
         <aside [@sidebarWidth]="showMenu() ? 'expanded' : 'collapsed'"
             class="flex flex-col justify-between h-full rounded-2xl overflow-hidden relative z-10 liquid-glass">
 
             <div class="w-full flex flex-col min-h-0 px-3 py-4">
 
-                <!-- HEADER -->
                 <div class="flex items-center px-2 pb-3 border-b border-white/20"
                     [ngClass]="showMenu() ? 'justify-between' : 'justify-center'">
 
@@ -121,51 +119,43 @@
                     </button>
 
                     @if (showMenu()) {
-                   <button type="button"
-    class="w-8 h-8 flex items-center justify-center cursor-pointer rounded-lg transition-colors select-none
+                    <button type="button" class="w-8 h-8 flex items-center justify-center cursor-pointer rounded-lg transition-colors select-none
            bg-white/30 hover:bg-white/50
            text-slate-700 hover:text-slate-950
-           flex-shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
-    (click)="toggleSidebar()" aria-label="Colapsar menú">
+           flex-shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-sky-400" (click)="toggleSidebar()"
+                        aria-label="Colapsar menú">
 
-    <i class="pi pi-align-justify text-sm" aria-hidden="true"></i>
-</button>
+                        <i class="pi pi-align-justify text-sm" aria-hidden="true"></i>
+                    </button>
                     }
                 </div>
 
-                <!-- NAV -->
                 <div class="mt-3 flex-1 overflow-y-auto overflow-x-hidden pr-1 -mr-1">
 
                     @for (mod of modulos(); track mod.idSistemaModulo ?? $index) {
                     <div class="mb-1">
 
                         <button type="button" [pTooltip]="showMenu() ? undefined : mod.nombre" tooltipPosition="right"
-                            class="group relative w-full min-h-12 px-2.5 py-2 flex items-center gap-3 cursor-pointer rounded-xl transition-all select-none bg-transparent overflow-hidden outline-none"
+                            class="group relative w-full min-h-12 px-2.5 py-2 flex items-center gap-3 cursor-pointer rounded-xl transition-all select-none bg-transparent overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
                             [ngClass]="isModuloActive(mod.idSistemaModulo)
-                            ? 'text-emerald-800 hover:bg-white/20'
-                            : 'text-slate-800 hover:bg-white/20 hover:text-slate-950'" (click)="toggleModulo(mod)"
+        ? 'bg-slate-200/70 text-slate-950 font-semibold'
+        : 'text-slate-700 hover:bg-slate-100/70 hover:text-slate-950'" (click)="toggleModulo(mod)"
                             [attr.aria-expanded]="isModuloExpanded(mod.idSistemaModulo)"
                             [attr.aria-label]="'Abrir módulo ' + mod.nombre">
 
-                            <!-- RIEL ACTIVO -->
-                            <span
-                                class="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-sm bg-emerald-600 dark:bg-emerald-400 origin-top"
+                            <span class="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-sm bg-slate-500 origin-top"
                                 [@railScale]="isModuloActive(mod.idSistemaModulo) ? 'on' : 'off'" aria-hidden="true">
                             </span>
 
-                            <!-- ICONO MÓDULO -->
                             <span
-                                class="w-10 h-10 rounded-[0.8rem] flex items-center justify-center flex-shrink-0 transition-colors duration-200 shadow-sm"
+                                class="w-10 h-10 rounded-[0.8rem] flex items-center justify-center flex-shrink-0 transition-colors duration-200 shadow-sm ring-1"
                                 [ngClass]="isModuloActive(mod.idSistemaModulo)
-                                ? 'bg-emerald-600 dark:bg-emerald-500'
-                                : 'bg-white group-hover:bg-slate-50  dark:bg-slate-100  dark:group-hover:bg-white '">
+            ? 'bg-white/90 ring-slate-300'
+            : 'bg-white/60 ring-slate-200/60 group-hover:bg-white/80 group-hover:ring-slate-300'">
 
-                                <img class="w-5 h-5" [src]="svgSrcForModulo(mod)" alt="" aria-hidden="true" [ngClass]="isModuloActive(mod.idSistemaModulo)
-                                    ? 'brightness-0 invert dark:brightness-100 dark:invert-0'
-                                    : ''" />
+                                <img class="w-5 h-5" [src]="svgSrcForModulo(mod)" alt="" aria-hidden="true" />
                             </span>
 
-                            <!-- TEXTO MÓDULO -->
                             <div class="overflow-hidden flex-1 min-w-0 text-left"
                                 [@fadeText]="showMenu() ? 'visible' : 'hidden'">
 
@@ -174,35 +164,31 @@
                                 </span>
                             </div>
 
-                            <!-- CHEVRON -->
                             <div class="overflow-hidden shrink-0" [@fadeText]="showMenu() ? 'visible' : 'hidden'">
 
-                                <i class="pi pi-chevron-down text-[10px] text-emerald-600 dark:text-emerald-300 inline-block"
+                                <i class="pi pi-chevron-down text-[10px] text-slate-500 inline-block"
                                     [@chevronRotate]="isModuloExpanded(mod.idSistemaModulo) ? 'open' : 'closed'">
                                 </i>
                             </div>
                         </button>
 
-                        <!-- SUBMENÚ -->
                         <div class="overflow-hidden"
                             [@accordion]="(showMenu() && isModuloExpanded(mod.idSistemaModulo)) ? 'open' : 'closed'">
 
                             <div class="pt-1.5 pl-[1.1rem] pr-1 pb-1.5 flex flex-col gap-1">
 
                                 @for (p of pantallasDeModulo(mod); track p.idPantalla ?? $index) {
-                                <a class="group px-2.5 py-2 rounded-lg flex items-center gap-2.5 cursor-pointer transition-all outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                                <a class="group px-2.5 py-2 rounded-lg flex items-center gap-2.5 cursor-pointer transition-all outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
                                     [routerLink]="[p.descripcion]" routerLinkActive #rla="routerLinkActive"
-                                    [attr.aria-current]="rla.isActive ? 'page' : null"
-                                    [ngClass]="rla.isActive
-                                        ? 'bg-white/30 text-slate-950 font-semibold shadow-sm ring-1 ring-white/40'
-                                        : 'text-slate-700 bg-transparent hover:bg-white/20 hover:text-slate-950 hover:shadow-sm'">
+                                    [attr.aria-current]="rla.isActive ? 'page' : null" [ngClass]="rla.isActive
+        ? 'bg-slate-200/70 text-slate-900 font-semibold'
+        : 'text-slate-600 bg-transparent hover:bg-slate-100/70 hover:text-slate-900'">
 
-                                    <!-- ICONO PANTALLA -->
                                     <span
-                                        class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors shadow-sm ring-1 ring-white/30"
+                                        class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors"
                                         [ngClass]="rla.isActive
-                                            ? 'bg-white dark:bg-white dark:ring-emerald-700'
-                                            : 'bg-white  group-hover:bg-slate-50  dark:bg-slate-100 dark:group-hover:bg-white'">
+            ? 'bg-white/90 text-slate-800 shadow-sm ring-1 ring-slate-200'
+            : 'bg-white/60 ring-1 ring-slate-200/60 group-hover:bg-white/80'">
 
                                         <img class="w-4 h-4" [src]="svgSrcForPantalla(p)" alt="" aria-hidden="true" />
                                     </span>
@@ -210,10 +196,6 @@
                                     <span class="font-medium text-[13px] truncate flex-1">
                                         {{ p.nombre }}
                                     </span>
-
-                                    <!-- @if (getBadge(p.idPantalla) | async; as count) {
-                                    <p-badge [value]="count.toString()" badgeSize="small" />
-                                    } -->
                                 </a>
                                 }
 
@@ -231,7 +213,6 @@
                 </div>
             </div>
 
-            <!-- FOOTER -->
             <div class="w-full px-3 pb-3 pt-2 border-t border-white/20">
                 <button type="button" [pTooltip]="showMenu() ? undefined : 'Configuración'" tooltipPosition="right"
                     class="w-full px-2.5 py-2.5 flex items-center gap-3 cursor-pointer rounded-xl transition-all select-none text-slate-700 hover:bg-white/20 hover:text-slate-900 bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
@@ -248,7 +229,7 @@
                 </button>
             </div>
         </aside>
-    </div>
+    </div> -->
 
     <main class="flex-1 min-w-0 h-[calc(100vh-2rem)] overflow-hidden -mr-4">
         <div class="h-full overflow-y-auto overflow-x-hidden flex flex-col">
@@ -256,8 +237,7 @@
                 <router-outlet></router-outlet>
             </div>
 
-            <!-- FOOTER -->
-            <footer
+            <!-- <footer
                 class="border-t border-surface px-3 py-2 sm:px-6 sm:py-3 mt-3 sm:mt-4 flex flex-col sm:flex-row items-center sm:justify-between gap-1 sm:gap-2 text-[10px] sm:text-xs text-center sm:text-left text-surface-200 sm:text-surface-500 dark:text-surface-500">
 
                 <span class="leading-tight">
@@ -273,7 +253,6 @@
                         Privacidad
                     </a>
 
-                    <!-- Facebook -->
                     <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current"
                             viewBox="0 0 24 24">
@@ -282,7 +261,6 @@
                         </svg>
                     </a>
 
-                    <!-- Twitter/X -->
                     <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current"
                             viewBox="0 0 24 24">
@@ -292,7 +270,7 @@
                     </a>
                 </div>
 
-            </footer>
+            </footer> -->
         </div>
     </main>
 </div>

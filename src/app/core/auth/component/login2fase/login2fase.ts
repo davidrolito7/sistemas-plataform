@@ -24,10 +24,10 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { environment } from 'src/app/environments/environment';
 
-const SISTEMA_ID = 4169;
-const AREA_ID = 2037;
-const PERFIL_ID =7252;
-const SUBAREA_ID = 1007;
+const SISTEMA_ID = environment.ConstantsService.idSistema;
+const AREA_ID = environment.ConstantsService.idArea;
+const SISTEMAPERFIL_ID = environment.ConstantsService.idSistemaPerfil;
+const SUBAREA_ID = environment.ConstantsService.idSubArea;
 
 @Component({
   selector: 'app-login2',
@@ -192,7 +192,7 @@ loginOptions = [
             return this.authService.GetPerfiles(idAreaSistemaUsuario).pipe(
               map((r: any) => {
                 const perfiles = r.data ?? [];
-                const perfil = perfiles.find((p: any) => p.idSistemaPerfil === PERFIL_ID);
+                const perfil = perfiles.find((p: any) => p.idSistemaPerfil === SISTEMAPERFIL_ID);
                 const perfilDesc = perfil?.descripcion ?? '';
 
                 return this.authService.getSubAreas(idAreaSistema, idG).pipe(
@@ -216,7 +216,7 @@ loginOptions = [
         const request = {
           idSistema: SISTEMA_ID,
           idArea: AREA_ID,
-          idSistemaPerfil: PERFIL_ID,
+          idSistemaPerfil: SISTEMAPERFIL_ID,
           idSubArea: SUBAREA_ID,
         };
 
@@ -272,7 +272,7 @@ loginOptions = [
     localStorage.setItem('recordarUsuario', 'false');
 
     sessionStorage.setItem('areaSeleccionada', String(AREA_ID));
-    sessionStorage.setItem('perfilSeleccionado', String(PERFIL_ID));
+    sessionStorage.setItem('perfilSeleccionado', String(SISTEMAPERFIL_ID));
     sessionStorage.setItem('perfilSeleccionadoDesc', perfilDesc);
     sessionStorage.setItem('idAreaSistemaUsuario', String(idAreaSistemaUsuario));
     sessionStorage.setItem('SubAreaNombre', subAreaNombre);

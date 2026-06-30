@@ -14,7 +14,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly apiService = inject(ApiService);
-  readonly placeholderPhoto = '/placeholder-avatar.svg';
+  readonly placeholderPhoto = 'placeholder-avatar.svg';
   readonly birthdayCardSkeletons = Array.from({ length: 4 });
   readonly confettiColors = ['#ff6f61', '#4a90e2', '#50c878', '#ffd166', '#9b5de5'];
 

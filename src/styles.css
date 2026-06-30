@@ -12,32 +12,23 @@
   @tailwind utilities;
 }
 
-
-
-:root {
-  --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+@font-face {
+  font-family: 'Avant Garde Gothic';
+  src: url('/assets/fonts/font/ITCAvantGardeStd-Bk.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* ============================================
-   ESCALA GLOBAL
-   ============================================ */
 
-/* Móvil / tablet: tamaño normal */
-html {
-  font-size: 90%;
+body {
+  font-family: 'Avant Garde Gothic', sans-serif;
 }
 
-@media (max-width: 640px) {
-  html,
-  body {
-    min-height: 100%;
-    background: #315d53;
-  }
-
-  body {
-    margin: 0;
-  }
+.font-avant {
+  font-family: 'Avant Garde Gothic', sans-serif;
 }
+
 
 /* ============================================
    MODO OSCURO - Transition
@@ -107,63 +98,28 @@ html {
 .dark .bg-secondary {
   background-color: #b2915b;
 }
-
-
-
-/* Liquid Glass */
 .liquid-glass {
+  background: rgba(255, 255, 255, 0.012);
+  backdrop-filter: blur(3px) saturate(135%) brightness(1.04);
+  -webkit-backdrop-filter: blur(3px) saturate(135%) brightness(1.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
   position: relative;
   overflow: hidden;
-  isolation: isolate;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.055) 0%,
-      rgba(255, 255, 255, 0.022) 24%,
-      rgba(255, 255, 255, 0.01) 50%,
-      rgba(255, 255, 255, 0.022) 76%,
-      rgba(255, 255, 255, 0.055) 100%
-    );
-
-  backdrop-filter: blur(5px) saturate(1.28) contrast(1.08);
-  -webkit-backdrop-filter: blur(5px) saturate(1.28) contrast(1.08);
-
-  border: none;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.075),
-    0 14px 36px rgba(0, 0, 0, 0.1);
 }
 
 .liquid-glass::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
   border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.018) 40%,
+    rgba(255, 255, 255, 0.004) 100%
+  );
   pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.018) 18%,
-      rgba(255, 255, 255, 0.008) 50%,
-      rgba(255, 255, 255, 0.018) 82%,
-      rgba(255, 255, 255, 0.05) 100%
-    );
-
-  opacity: 0.75;
-}
-
-.liquid-glass::after {
-  content: none;
-}
-
-.liquid-glass > * {
-  position: relative;
-  z-index: 1;
 }
 
 :host ::ng-deep p-select .p-select-label {

@@ -2,63 +2,48 @@
     <!-- <app-notificacion-toast [notificacion]="notificacionToast()" (cerrada)="onToastCerrada()"> -->
     <!-- </app-notificacion-toast> -->
 
-    <header
-        class="liquid-glass flex items-center justify-between p-2 rounded-2xl ">
-        <div class="flex items-center gap-2 min-w-0">
-            <button type="button"
-                class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl bg-surface-100 hover:bg-surface-200 dark:bg-surface-800 dark:hover:bg-surface-700 transition-colors text-color shrink-0"
-                (click)="drawerService.open()" aria-label="Abrir menu">
+    <header class="w-full grid grid-cols-1 gap-3 px-3 py-2 text-white md:grid-cols-[1fr_auto_1fr] md:items-center">
 
-                <i class="pi pi-bars text-base"></i>
-            </button>
+        <!-- Izquierda: logo + texto -->
+        <div class="flex items-center gap-2 justify-center md:justify-start">
+            <i class="pi pi-sparkles text-white/80 text-sm"></i>
 
-            <div class="sm:hidden min-w-0">
-                <div class="text-sm font-semibold text-surface-100 dark:text-surface-0 leading-tight truncate">
+            <span class="text-sm font-semibold text-white">
+                deployer
+            </span>
+        </div>
+        <!-- Centro: 4 opciones -->
+        <nav class="grid grid-cols-2 gap-1.5 text-center sm:flex sm:items-center sm:justify-center sm:gap-4">
+
+            <a routerLink="/deploy" class="text-xs font-medium text-white hover:text-white/80 transition cursor-pointer">
+                Desplegar
+            </a>
+
+            <a routerLink="/permisos" class="text-xs font-medium text-white hover:text-white/80 transition cursor-pointer">
+                Permisos
+            </a>
+
+            <a routerLink="/equipo" class="text-xs font-medium text-white hover:text-white/80 transition cursor-pointer">
+                Equipo
+            </a>
+
+            
+        </nav>
+
+        <!-- Derecha: usuario -->
+        <div class="flex items-center justify-center gap-2 shrink-0 md:justify-end">
+            <div class="flex flex-col text-center md:text-right">
+                <span class="text-xs font-normal text-white leading-tight cursor-pointer hover:text-white/80 transition"
+                    (click)="visibleDrawer = true">
                     {{ abogadoNombre }}
-                </div>
+                </span>
 
-                <div class="text-[11px] text-surface-100 dark:text-surface-0 leading-tight truncate max-w-[11rem]">
-                    {{ perfilNombre ? perfilNombre : 'Mi cuenta' }}
-                </div>
+                <span class="text-[11px] text-white/75 mt-0.5">
+                    {{ perfilNombre ? perfilNombre : '' }}
+                </span>
             </div>
-
-            <!-- <img src="logo.png" alt="Logo" class="hidden sm:block h-12 sm:h-12 w-auto shrink-0 ml-3" /> -->
         </div>
 
-        <div class="flex items-center gap-3 shrink-0 mr-1">
-            <div class="hidden md:flex flex-col text-right">
-                <span class="text-sm font-semibold leading-tight">
-                    {{ abogadoNombre }}
-                </span>
-
-                <span class="text-xs  mt-0.5">
-                    {{ areaNombre ? (areaNombre) : '' }}
-                    {{ areaNombre && perfilNombre ? ' · ' : '' }}
-                    {{ perfilNombre ? (perfilNombre) : '' }}
-                    {{ perfilNombre && subAreaNombre ? ' · ' : '' }}
-                    {{ subAreaNombre ? (subAreaNombre) : '' }}
-                </span>
-            </div>
-
-            <p-avatar [image]="abogadoFotoUrl" (click)="visibleDrawer = true; drawerMobileTab = 'perfil'" shape="circle"
-                styleClass="cursor-pointer border-2 border-transparent hover:border-primary transition-all
-         !w-[48px] !h-[48px] !min-w-[48px] !min-h-[48px]">
-            </p-avatar>
-
-            <!-- <button type="button"
-                class="hidden sm:flex relative w-[48px] h-[48px] items-center justify-center rounded-full border border-surface-200 bg-surface-100 text-primary shadow-sm hover:bg-surface-200 dark:border-surface-700 dark:bg-surface-800 dark:text-primary-300 dark:hover:bg-surface-700 cursor-pointer transition-all"
-                (click)="visibleNotificaciones = true" aria-label="Abrir notificaciones">
-
-                <i class="pi pi-bell text-xl"></i>
-
-                @if (pendientes() > 0) {
-                <span
-                    class="absolute top-0 right-0 z-50 w-5 h-5 text-[11px] font-bold text-white bg-red-500 rounded-full flex items-center justify-center shadow-sm border-2 border-surface-0 dark:border-surface-900">
-                    {{ pendientes() }}
-                </span>
-                }
-            </button> -->
-        </div>
     </header>
 
 </div>
@@ -175,7 +160,7 @@
                     </button>
                 </div>
 
-                <div
+                <!-- <div
                     class="group rounded-2xl border border-surface-200 border-dashed dark:border-surface-700 bg-surface-0 dark:bg-surface-900 overflow-hidden">
                     <button type="button"
                         class="w-full flex items-center gap-3 p-3 cursor-pointer hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors text-left"
@@ -200,8 +185,8 @@
                             <i class="pi pi-chevron-right text-xs"></i>
                         </div>
                     </button>
-                </div>
-
+                </div> -->
+                <!-- 
                 <div
                     class="group rounded-2xl border border-surface-200 border-dashed dark:border-surface-700 bg-surface-0 dark:bg-surface-900 overflow-hidden">
                     <button type="button"
@@ -227,7 +212,7 @@
                             <i class="pi pi-chevron-right text-xs"></i>
                         </div>
                     </button>
-                </div>
+                </div> -->
             </div>
             }
 
@@ -393,7 +378,7 @@
                 'border-l-4 border-l-green-500': notif.accion !== 'NUEVO' && notif.accion !== 'TURNADO' && notif.accion !== 'FORANEO',
                 'bg-surface-0 dark:bg-surface-900 hover:bg-surface-50 dark:hover:bg-surface-800/50': !notif.leida,
                 'bg-surface-50 dark:bg-surface-800/30 opacity-70': notif.leida
-            }" >
+            }">
 
             <div class="h-12 w-12 rounded-full flex items-center justify-center text-xs self-center" [ngClass]="{
                     'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400': notif.accion === 'NUEVO',

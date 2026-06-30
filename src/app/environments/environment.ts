@@ -8,7 +8,10 @@ export const environment = {
     DEV_SKIP_PERFIL: true,
     ConstantsService: {
         ruta: 'https://pruebas.tribunaloaxaca.gob.mx/permisos',
-        idSistema: 4169,
+        idSistema: 2,
+        idArea: 1,
+        idSistemaPerfil: 11,
+        idSubArea: 1007,
         //ruta : 'https://localhost:7260'
     },
 

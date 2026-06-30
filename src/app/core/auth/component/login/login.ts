@@ -36,7 +36,7 @@ import { environment } from 'src/app/environments/environment';
 export class Login implements OnInit {
   usuario: string     = '';
   contrasenia: string = '';
-  idSistema: number   = 4169;
+  idSistema: number   = environment.ConstantsService.idSistema;
   recordar: boolean   = false;
   verPassword: boolean = false;
   isLoading: boolean  = false;

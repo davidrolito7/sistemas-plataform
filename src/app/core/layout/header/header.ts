@@ -12,6 +12,7 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { TokenService } from '../../../core/auth/service/token.service';
 import { AuthService } from '../../../core/auth/service/auth.service';
 import { DrawerService } from '../services/drawer.service';
+import { RouterLink } from '@angular/router';
 // import { NotificacionesService } from '../../services/notificaciones.service';
 // import { NotificacionResponse } from '../../interface/shared.interface';
 // import { NotificacionToastComponent } from '../notificacion-toast/notificacion-toast';
@@ -26,6 +27,7 @@ import { DrawerService } from '../services/drawer.service';
     CommonModule,
     BadgeModule,
     OverlayBadgeModule,
+    RouterLink,
    // NotificacionToastComponent,
   ],
   templateUrl: './header.html',
